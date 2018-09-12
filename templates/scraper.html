@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block content %}
+  <main class="about-section">
+    <div class="container">
+
+    <h2>Scraper</h2>
+    <p>In Learning Flask, you'll build an app that let's you find new places around you. With this app you can find places you like, and discover new points of interest wherever you are.</p>
+
+    <form method="POST" action="/scraper">
+      {{ form.hidden_tag() }}
+      {{ form.submit(class="btn-primary") }}
+    </form>
+
+    </div>
+  </main>
+{% endblock %}
