@@ -27,20 +27,20 @@ def slack_message(message, channel):
 @celery.task
 def background_task():
     old_sample = ""
-    
+    print("Background task beginning...")
+        
     for i in range(10):
-        print("Hello Word")
+        print("Checking " + str(i) + " time")
         time.sleep(3)
 
         # Retrieves html from MIT website
         
-        page = open("maznev.html")
-        soup = BeautifulSoup(page, 'html.parser')
+        #page = open("maznev.html")
+        #soup = BeautifulSoup(page, 'html.parser')
         
-        #url = "https://scripts.mit.edu/~mitoc/wall/"
-        #page = requests.get(url)
-      #  soup = BeautifulSoup(page.text,'html.parser')
-        #soup = BeautifulSoup('C:\Users\Joey\Desktop\climbing-with-flask\maznev.html', 'html.parser')
+        url = "https://scripts.mit.edu/~mitoc/wall/"
+        page = requests.get(url)
+        soup = BeautifulSoup(page.text,'html.parser')
 
         # Takes either local html or MIT html and finds the staff table
         sample = soup.find('table','timeline').text
@@ -49,15 +49,15 @@ def background_task():
         # when the script grabbed the html
         substring = "no hours"
 
-        if substring in sample:
+        if substring in sample and old_sample != sample:
           slack_message("No Hours posted!","general")
           print("No hours posted")
-        elif substring not in sample and old_sample != sample :
           
+        elif substring not in sample and old_sample != sample:
           print("Hours posted!")
           name = soup.find('div','name').text
           print(name)
-          slack_message("Hours posted with " + name,"general")
+          #slack_message("Hours posted with " + name,"general")
 	      
         old_sample = sample
 
