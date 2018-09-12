@@ -18,7 +18,7 @@ celery = Celery(app.name, broker=app.config['CELERY_BROKER_URL'])
 celery.conf.update(app.config)
 
 def slack_message(message, channel):
-    token = 'xoxp-423876483524-424250873061-423975246835-4eb6f5ac1c6a39f700031b7fce35c711'
+    token = ''
     sc = SlackClient(token)
     sc.api_call('chat.postMessage', channel=channel,
                 text=message, username='My Sweet Bot',
